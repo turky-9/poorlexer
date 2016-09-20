@@ -1,0 +1,7 @@
+﻿a = ds "start"
+b = p "proc"
+c = ds "end"
+d = f "output"
+
+(a "comment" b  c )
+(b d)
