@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YuPoorLexer", "YuPoorLexer\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleParser", "SampleParser\SampleParser.csproj", "{5149EF99-CF38-42BA-8528-DE47C9DF8C8E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YuParseCombi", "YuParseCombi\YuParseCombi.csproj", "{19B65F29-C45E-4330-80E1-955B7B327BA0}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = YuPoorLexer.vsmdi
@@ -38,6 +40,16 @@ Global
 		{5149EF99-CF38-42BA-8528-DE47C9DF8C8E}.Release|Mixed Platforms.Build.0 = Release|x86
 		{5149EF99-CF38-42BA-8528-DE47C9DF8C8E}.Release|x86.ActiveCfg = Release|x86
 		{5149EF99-CF38-42BA-8528-DE47C9DF8C8E}.Release|x86.Build.0 = Release|x86
+		{19B65F29-C45E-4330-80E1-955B7B327BA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19B65F29-C45E-4330-80E1-955B7B327BA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19B65F29-C45E-4330-80E1-955B7B327BA0}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{19B65F29-C45E-4330-80E1-955B7B327BA0}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{19B65F29-C45E-4330-80E1-955B7B327BA0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{19B65F29-C45E-4330-80E1-955B7B327BA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19B65F29-C45E-4330-80E1-955B7B327BA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19B65F29-C45E-4330-80E1-955B7B327BA0}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{19B65F29-C45E-4330-80E1-955B7B327BA0}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{19B65F29-C45E-4330-80E1-955B7B327BA0}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using YuPoorLexer;
 using System.IO;
+using System.Text.RegularExpressions;
+using YuParseCombi;
 
 namespace SampleParser
 {
@@ -142,6 +144,93 @@ namespace SampleParser
         {
             try
             {
+                //パーサコンビネータfrom
+                string txt = "hogefoo";
+                var p = YuParseCombi.PerserFactory.GetPerserToken("hoge");
+
+                var ctx = new YuParseCombi.YuContext(txt);
+                var result = p(ctx);
+
+
+                var p1 = YuParseCombi.PerserFactory.GetPerserChar('h');
+                var p2 = YuParseCombi.PerserFactory.GetPerserChar('o');
+                var p3 = YuParseCombi.PerserFactory.And(p1, p2);
+                
+                ctx = new YuParseCombi.YuContext(txt);
+                result = p3(ctx);
+
+                var p4 = YuParseCombi.PerserFactory.GetPerserChar('g');
+                var p5 = YuParseCombi.PerserFactory.GetPerserChar('e');
+                var p6 = YuParseCombi.PerserFactory.Concat(p1, p2, p4, p5);
+
+                ctx = new YuParseCombi.YuContext(txt);
+                result = p6(ctx);
+
+                var pmw = YuParseCombi.PerserFactory.GetPerserManyWhileSpaceCRLF();
+                ctx = new YuParseCombi.YuContext("  \t\r\r\nhoge");
+                result = pmw(ctx);
+
+
+                string hoge = "\"a\r\nb\\c\\\"d\"";
+                Console.WriteLine(hoge);
+                var p8 = YuParseCombi.PerserFactory.GetPerserLiteralString();
+                ctx = new YuParseCombi.YuContext(hoge);
+                result = p8(ctx);
+                if (result.IsSuccess)
+                    Console.WriteLine(result.Result);
+
+                Match m = Regex.Match("aBd", "[a-z|A-Z]*");
+
+                hoge = "112239";
+                var p9 = YuParseCombi.PerserFactory.GetPerserPosiInt();
+                ctx = new YuParseCombi.YuContext(hoge);
+                result = p9(ctx);
+
+                hoge = "11119";
+                var p10 = YuParseCombi.PerserFactory.GetPerserChar('1');
+                YuPerser p11 = null;
+                YuPerser p12 = PerserFactory.Lazy(() => p11);
+                p11 = PerserFactory.Option(PerserFactory.Concat(p10, p12));
+                ctx = new YuParseCombi.YuContext(hoge);
+                result = p11(ctx);
+
+
+                var pdgit = PerserFactory.Many1(PerserFactory.GetPerserDigit());
+                var pplus = PerserFactory.GetPerserChar('+');
+                var pspace = PerserFactory.Many( PerserFactory.GetPerserWhileSpace());
+                var pexp = PerserFactory.Concat(pspace, pdgit, pspace, pplus, pspace, pdgit);
+
+                while (true)
+                {
+                    string bff = Console.ReadLine();
+                    if (bff.ToUpper() == "EXIT")
+                        break;
+
+                    var ret = pexp(new YuContext(bff));
+                    if (ret.IsSuccess == true)
+                    {
+                        Console.WriteLine(ret.Result);
+                        foreach (var s in ret.Parts)
+                            Console.WriteLine("[" + s + "]");
+                    }
+                    else
+                    {
+                        Console.WriteLine("#FAILED#");
+                    }
+                }
+
+                Console.Write("hit any key...");
+                Console.ReadLine();
+                Environment.Exit(0);
+                //パーサコンビネータend
+
+
+
+
+
+
+
+
                 //while (true)
                 //{
                 //    string buff = Console.ReadLine();
@@ -152,6 +241,7 @@ namespace SampleParser
                 //    Console.WriteLine("result:" + p.Parse());
                 //}
 
+                /*
                 StringBuilder buff = new StringBuilder();
                 while (true)
                 {
@@ -163,6 +253,28 @@ namespace SampleParser
 
                 SampleParser p = new SampleParser(new PoorLexer(buff.ToString()));
                 Console.Out.WriteLine(p.Parse2());
+                */
+
+                //入力フェーズ
+                StringBuilder buff = new StringBuilder();
+                while (true)
+                {
+                    string tmp = Console.ReadLine();
+                    if (tmp == null)
+                        break;
+                    buff.Append(tmp + Environment.NewLine);
+                }
+
+                //字句解析フェーズ
+                PoorLexer plex = new PoorLexer(buff.ToString());
+                Token token = plex.NextToken();
+                while (token.Type != ETokenType.Eof)
+                {
+                    Console.Out.WriteLine(token.ToString());
+                    token = plex.NextToken();
+                }
+                Console.ReadLine();
+                    
             }
             catch (Exception ex)
             {
